@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdbool.h>
+#include <unistd.h>
 
 typedef struct __s_block
 {
@@ -14,7 +15,7 @@ typedef struct __s_block
 _SBLOCK *allocateMemBlock(size_t size)
 {
     _SBLOCK *block = (_SBLOCK *)sbrk(0);
-    void *memadr = (void *)sbrk(0);
+    int *memadr = (int *)sbrk(0);
     void *allocate_mem = (void *)sbrk(BLOCK_SIZE + size);
 
     if (allocate_mem == (void *)-1)
@@ -36,7 +37,7 @@ void allocateNextMemBlock(size_t size, _SBLOCK **head)
 {
     _SBLOCK *current = *head;
     void *allocate_mem = NULL;
-    void *memadr = (void *)sbrk(0);
+    int *memadr = (int *)sbrk(0);
 
     if (current == NULL)
     {
